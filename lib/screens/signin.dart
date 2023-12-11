@@ -20,11 +20,14 @@ class _SigninState extends State<Signin> {
     return Scaffold(
       backgroundColor: secondary,
       body: Padding(
-        padding: EdgeInsets.all(18.0),
-        child: Center(
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.sizeOf(context).width * .042,
+            vertical: MediaQuery.sizeOf(context).width * .02),
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: [
-              Expanded(
+              Container(
                 child: Column(
                   children: [
                     Container(
@@ -33,7 +36,7 @@ class _SigninState extends State<Signin> {
                         margin: EdgeInsets.only(
                             top: MediaQuery.sizeOf(context).height * .05)),
                     SizedBox(
-                      height: 40,
+                      height: MediaQuery.sizeOf(context).height * .04,
                     ),
                     Text(
                       "SIGN IN",
@@ -42,7 +45,7 @@ class _SigninState extends State<Signin> {
                           fontSize: 20,
                           fontWeight: FontWeight.w900),
                     ),
-                    SizedBox(height: 14),
+                    SizedBox(height: MediaQuery.sizeOf(context).height * .01),
                     Container(
                       child: TextField(
                         controller: emailController,
@@ -59,14 +62,14 @@ class _SigninState extends State<Signin> {
                           filled: true,
                           fillColor: primary,
                           contentPadding: EdgeInsets.symmetric(
-                              horizontal: 35.0, vertical: 20.0),
+                              horizontal: 35.0, vertical: 10.0),
                           hintStyle: TextStyle(
                             color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 14),
+                    SizedBox(height: MediaQuery.sizeOf(context).height * .015),
                     Container(
                       child: TextField(
                         controller: passwordController,
@@ -84,7 +87,7 @@ class _SigninState extends State<Signin> {
                           filled: true,
                           fillColor: primary,
                           contentPadding: EdgeInsets.symmetric(
-                              horizontal: 35.0, vertical: 13),
+                              horizontal: 35.0, vertical: 0),
                           hintStyle: TextStyle(
                             color: Colors.white,
                           ),
@@ -107,9 +110,13 @@ class _SigninState extends State<Signin> {
                   ],
                 ),
               ),
-              Expanded(
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * .017,
+              ),
+              Container(
                 child: Container(
                   width: MediaQuery.sizeOf(context).width,
+                  height: MediaQuery.sizeOf(context).height * .59,
                   child: Image.asset(
                     'assets/images/Asset_box.png',
                     fit: BoxFit.fill,
