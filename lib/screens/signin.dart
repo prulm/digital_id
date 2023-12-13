@@ -1,5 +1,7 @@
+import 'package:digital_id/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -14,6 +16,22 @@ class _SigninState extends State<Signin> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isVisible = false;
+  bool isOn = false;
+
+  void _getPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.getBool('isOn') != null
+          ? isOn = prefs.getBool('isOn')!
+          : prefs.setBool('isOn', false);
+    });
+  }
+
+  @override
+  void initState() {
+    _getPreferences();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +64,7 @@ class _SigninState extends State<Signin> {
                           fontWeight: FontWeight.w900),
                     ),
                     SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+                    Divider(),
                     Container(
                       child: TextField(
                         controller: emailController,
@@ -113,15 +132,32 @@ class _SigninState extends State<Signin> {
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * .017,
               ),
-              Container(
+              Switch(
+                value: isOn,
+                onChanged: (data) async {
+                  final SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setBool('isOn', data);
+                  setState(() {
+                    isOn = data;
+                  });
+                },
+              ),
+              GestureDetector(
                 child: Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height * .59,
-                  child: Image.asset(
-                    'assets/images/Asset_box.png',
-                    fit: BoxFit.fill,
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: MediaQuery.sizeOf(context).height * .4,
+                    child: Image.asset(
+                      'assets/images/Asset_box.png',
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Settings()));
+                },
               ),
             ],
           ),
